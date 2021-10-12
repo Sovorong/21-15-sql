@@ -22,5 +22,3 @@ function getPlayTime(s) {
 	else
 		return zp(Math.floor(s/60)) + ':' + zp(s%60); 
 }
-
-

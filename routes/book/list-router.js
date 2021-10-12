@@ -42,3 +42,5 @@ router.get(['/', '/:page'], async (req, res, next) => {
 		next(error(err))
 	}
 })
+
+module.exports = router

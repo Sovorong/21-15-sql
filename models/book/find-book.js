@@ -45,8 +45,7 @@ const findBooks = async (startIdx, listCnt) => {
 		return { success: true, books }
 	}
 	catch(err) {
-		return { success: false, err }
-	}
+			return { success: false, err }
 }
 
 module.exports = { findBookCount, findBook, findBooks }

@@ -1,11 +1,11 @@
-const morgan = require('morgan');
-const path = require('path');
-const rfs = require('rotating-file-stream');
+const methodOverride = require('method-override')
 
-const stream = rfs.createStream('access.log', {
-	interval: '1d',
-	path: path.join(__dirname, '../log')
-});
-
-const logger = morgan('combined', { stream });
-module.exports = logger;
+module.exports = () => {
+	return methodOverride((req, res) => {
+		if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+			var method = req.body._method
+			delete req.body._method
+			return method
+		}
+	})
+}

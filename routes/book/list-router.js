@@ -8,11 +8,13 @@ const createPager = require('../../modules/pager-init')
 const { findBookCount, findBooks } = require('../../models/book')
 
 router.get(['/', '/:page'], async (req, res, next) => {
+	console.log("hi")
 	req.app.locals.PAGE = 'LIST'
 	req.app.locals.js = 'book/list'
 	req.app.locals.css = 'book/list'
 	try {
 		const { count: totalRecord } = await findBookCount()
+		console.log(totalRecord)
 		const page = Number(req.params.page || 1)
 		const pager = createPager(page, totalRecord, 5, 3)
 		const { books } = await findBooks(pager.startIdx.toString(), pager.listCnt.toString())

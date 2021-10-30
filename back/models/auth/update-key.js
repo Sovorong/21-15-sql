@@ -6,7 +6,6 @@ const updateKey = async (idx) => {
 		let sql
 		sql = " SELECT * FROM users_api WHERE fidx=? "
 		let [rs] = await pool.execute(sql, [idx])
-        console.log(idx,rs)
 		if(rs.length === 1) sql = " UPDATE users_api SET apikey=? WHERE fidx=? "
 		else sql = " INSERT INTO users_api SET apikey=?, fidx=? "
 		let apikey = v4()
@@ -18,4 +17,15 @@ const updateKey = async (idx) => {
 	}
 }
 
-module.exports = { updateKey }
+const updateDomain = async (domain, fidx) => {
+	try {
+		let sql = " UPDATE users_api SET domain=? WHERE fidx=? "
+		let [rs] = await pool.execute(sql, [domain, fidx])
+		return rs.affectedRows === 1
+	}
+	catch(err) {
+		throw new Error(err)
+	}
+}
+
+module.exports = { updateKey, updateDomain }

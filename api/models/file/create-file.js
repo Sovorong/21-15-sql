@@ -9,7 +9,7 @@ const createFile = async data => {
 		return { success: true, idx: rs.insertId }
 	}
 	catch(err) {
-		throw new Error(err)
+		return { success: false, err }
 	}
 }
 

@@ -8,6 +8,7 @@ key = value ORDER BY key [DESC, ASC] LIMIT 0, 10
 opt.key = 'idx' => key = value
 opt.key = { fields: ['userid', 'id'], op: 'AND' }
 opt.value = ['booldook', '2'] => WHERE userid = value1 OR[AND] passwd = value2
+
 pool.execute() => INSERT, UPDATE, DELETE [{ affectedRows... },{ field info }]
 pool.execute() => SELECT [[{ id: 1...},{ id: 2...},{ id: 3...}],{ field info }]
 */
@@ -35,8 +36,10 @@ const findUser = async (key, value) => {
 		ON U.idx = A.fidx 
 		WHERE U.${key} = ? `
 		const [r] = await pool.execute(sql, [value])
-		if(r.length === 1)
+		if(r.length === 1) {
+			r[0].domain = r[0].domain ? r[0].domain.split(',').join('\r\n') : ''
 			return { success: true, user: r[0] }
+		}
 		else 
 			return { success: false, user: null }
 	}

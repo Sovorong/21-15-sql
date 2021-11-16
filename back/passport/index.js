@@ -1,6 +1,7 @@
 /* 
 1. 로그인 -> serialize : browser의 cookie에 idx 남기기
 2. 재접속 할때마다 -> deserialize -> req.user
+
 3. strategy 로직
 	가. 로그인 라우터의 미들웨어 passport.authenticate(['local', 'kakao', 'naver'])를 거친다.
 	나. 각 Strategy로 가서 
@@ -15,10 +16,12 @@ const naver = require('./naver-strategy')
 const { findUser } = require('../models/auth')
 
 const serialize = (user, done) => {
+	console.log("user:", user);
 	done(null, user.idx)
 }
 
 const deserialize = async (idx, done) => {
+	console.log("idx:", idx);
 	try {
 		const { success, user } = await findUser('idx', idx)
 		if(success) done(null, user)

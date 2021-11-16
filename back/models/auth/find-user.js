@@ -62,6 +62,7 @@ const findAllUser = async (order = 'ASC') => {
 }
 
 // GET: field, value -> 회원존재여부
+// Login (아이디 중복 확인)
 const existUser = async (key, value) => {
 	try {
 		const sql = ` SELECT * FROM users WHERE ${key} = ? `
@@ -77,7 +78,7 @@ const existUser = async (key, value) => {
 const loginUser = async (userid, passwd) => {
 	let sql, compare
 	try {
-		sql = " SELECT * FROM users WHERE userid=? "
+		sql = " SELECT * FROM users WHERE userid=? AND status > '0' "
 		const [r] = await pool.execute(sql, [userid])
 		if(r.length === 1) {
 			compare = await bcrypt.compare(passwd + process.env.BCRYPT_SALT, r[0].passwd)
@@ -92,4 +93,24 @@ const loginUser = async (userid, passwd) => {
 	}
 }
 
-module.exports = { findUser, findAllUser, existUser, loginUser }
+// 패스워드 확인
+const findPasswd = async (key, passwd) => {
+	let sql;
+	try {
+		const field = typeof Number(key) === 'number' ? 'idx' : 'userid'
+		sql = ` SELECT passwd FROM users WHERE ${field}=? AND status > '0' `
+		const [r] = await pool.execute(sql, [key])
+		if(r.length === 1) {
+			compare = await bcrypt.compare(passwd + process.env.BCRYPT_SALT, r[0].passwd)
+			return compare 
+				? { success: true } 
+				: { success: false }
+		}
+		else return { success: false }
+	}
+	catch (err) {
+		throw new Error(err)
+	}
+}
+
+module.exports = { findUser, findAllUser, existUser, loginUser, findPasswd }

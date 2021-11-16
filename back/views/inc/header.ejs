@@ -19,6 +19,9 @@
 						<a href="/<%= LANG %>/auth/logout" class="sub">
 							<%= GLOBAL.NAVI[3] %>
 						</a>
+						<a href="/<%= LANG %>/auth/withdrawal" class="sub">
+							<%= GLOBAL.NAVI[8] %>
+						</a>
 					</div>
 			</div>
 			<!-- <a href="/<%= LANG %>/auth/logout" class="navi"><%= GLOBAL.NAVI[3] %></a> -->
@@ -50,6 +53,7 @@
 			? pathname.replace('/' + path[1] + '/', '/' + _lang + '/')
 			: '/' + _lang + pathname);
 	}
+
 	$('.header-wrapper .bt-navi').mouseenter(onNaviEnter);
 	$('.header-wrapper .bt-navi').mouseleave(onNaviLeave);
 	function onNaviEnter() {

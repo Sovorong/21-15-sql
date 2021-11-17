@@ -44,6 +44,7 @@ const isApiUser = async (req, res, next) => {
       else {
         next(createError(401, errMsg))
       }
+      
     }
     else if (domain && apikey) {
       const { success } = await findApiUser(domain, apikey)

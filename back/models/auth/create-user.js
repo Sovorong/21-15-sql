@@ -17,7 +17,7 @@ const createUser = async (user) => {
 
 		sql = " INSERT INTO users SET userid=?, passwd=?, username=?, email=? "
 		const [rs] = await pool.execute(sql, [userid, hashPasswd, username, email])
-		return rs.affectedRows === 1 
+		return rs.affectedRows === 1
 	}
 	catch(err) {
 		throw new Error(err)

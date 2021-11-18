@@ -104,4 +104,3 @@ CREATE TABLE IF NOT EXISTS `users_withdrawal` (
   KEY `fidx` (`fidx`),
   CONSTRAINT `FK_users_withdrawal_users` FOREIGN KEY (`fidx`) REFERENCES `users` (`idx`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
-

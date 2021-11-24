@@ -3,6 +3,7 @@ require('dotenv').config()
 const express = require('express')
 const app = express()
 const cookieParser = require('cookie-parser')
+const helmet = require('helmet')
 const cors = require('cors')
 
 /*************** server init **************/
